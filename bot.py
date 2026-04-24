@@ -265,10 +265,12 @@ class WinnerBot(discord.Client):
 
 
 async def run_winner_bot():
-    if not (TOKEN and GUILD_ID and WINNERS_CHANNEL_ID and ARCHIVE_CHANNEL_ID):
-        log.warning("Winner bot env vars missing (DISCORD_BOT_TOKEN/DISCORD_GUILD_ID/WINNERS_CHANNEL_ID/ARCHIVE_CHANNEL_ID); not starting.")
+    if not all([TOKEN, GUILD_ID, WINNERS_CHANNEL_ID, ARCHIVE_CHANNEL_ID]):
+        log.warning("❌ Не все переменные окружения заданы!")
         return
+
     bot = WinnerBot()
+
     async with bot:
         await bot.start(TOKEN)
 

@@ -3,18 +3,29 @@ import asyncio
 import logging
 from datetime import datetime, timezone
 
-from dotenv import load_dotenv
-load_dotenv()
-
 import discord
 from discord import app_commands
 
 log = logging.getLogger("winner_bot")
 
+# ✅ переменные
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 GUILD_ID = os.getenv("DISCORD_GUILD_ID")
 WINNERS_CHANNEL_ID = os.getenv("WINNERS_CHANNEL_ID")
 ARCHIVE_CHANNEL_ID = os.getenv("ARCHIVE_CHANNEL_ID")
+
+if not TOKEN:
+    raise Exception("No DISCORD_BOT_TOKEN")
+
+if not (GUILD_ID and WINNERS_CHANNEL_ID and ARCHIVE_CHANNEL_ID):
+    raise Exception("Missing IDs")
+
+# 👉 преобразуем в int после проверки
+GUILD_ID = int(GUILD_ID)
+WINNERS_CHANNEL_ID = int(WINNERS_CHANNEL_ID)
+ARCHIVE_CHANNEL_ID = int(ARCHIVE_CHANNEL_ID)
+
+print("Bot starting...")
 
 MODAL_ID = "winner_application_modal"
 OPEN_MODAL_BUTTON_ID = "open_winner_application"
